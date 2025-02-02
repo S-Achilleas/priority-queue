@@ -29,7 +29,7 @@ public class PQmax<T> implements PQInterface<T> {
 
     @Override
     public void insert(T item) {
-        if (size == heap.length - 1)
+        if (size == (heap.length - 1)*0.75)
             resize();
         heap[++size] = item;
         swim(size);
@@ -98,7 +98,7 @@ public class PQmax<T> implements PQInterface<T> {
     }
 
     private void resize() {
-        T[] newHeap = (T[]) new Object[heap.length + AUTOGROW_SIZE];
+        T[] newHeap = (T[]) new Object[heap.length * 2];
         for (int i = 0; i <= size; i++) {
             newHeap[i] = heap[i];
         }
