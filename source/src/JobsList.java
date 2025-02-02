@@ -10,7 +10,7 @@ private Node tail = null;
             this.next = null;
         }
     }
-    public void addJob(T job){
+    public void add(T job){
         Node newNode = new Node(job);
         if(head == null){
             head = newNode;
