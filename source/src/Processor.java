@@ -25,6 +25,10 @@ public class Processor implements Comparable<Processor> {
         return processedJobs;
     }
 
+    public int getId() {
+        return id;
+    }
+
 
     @Override
     public int compareTo(Processor other) {
