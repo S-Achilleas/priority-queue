@@ -6,9 +6,6 @@ public class PQmax<T> implements PQInterface<T> {
     private Comparator<T> comparator;
 
     private static final int DEFAULT_CAPACITY = 4;
-    private static final int AUTOGROW_SIZE = 4;
-
-
 
     public PQmax(Comparator<T> comparator) {
         this.heap = (T[]) new Object[DEFAULT_CAPACITY + 1];
@@ -29,7 +26,7 @@ public class PQmax<T> implements PQInterface<T> {
 
     @Override
     public void insert(T item) {
-        if (size == (heap.length - 1)*0.75)
+        if (size >= (heap.length - 1)*0.75)
             resize();
         heap[++size] = item;
         swim(size);
