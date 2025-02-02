@@ -4,34 +4,17 @@ import java.util.Comparator;
 public class Greedy {
     public static void main(String[] args) {
         String filename = args[0];
-        PQmax<Processor> pq = new PQmax<Processor>(Comparator.naturalOrder());
+        PQmax<Processor> pq = Comparisons.getProcessors(filename);
+        Processor p = null;
 
-        try{
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
-            Processor p = null;
-            int num_of_proc = Integer.parseInt(reader.readLine());
-            int num_of_jobs = Integer.parseInt(reader.readLine());
-            int validation = 0;
-            String line = reader.readLine();
+            Job[] joblist = Comparisons.getJobs(filename);
+            int num_of_jobs = joblist.length;
+            Sort.quicksort(joblist, 0, joblist.length - 1);
 
-            for (int i = 0; i < num_of_proc; i++){
-                p = new Processor();
-                pq.insert(p);
-            }
-
-            while (line != null){
-                String[] job = line.split(" ");
-                Job j = new Job(Integer.parseInt(job[0]), Integer.parseInt(job[1]));
+            for (int i = 0; i < num_of_jobs; i++){
                 p = pq.getmax();
-                p.addJob(j);
+                p.addJob(joblist[i]);
                 pq.insert(p);
-                validation++;
-                line = reader.readLine();
-            }
-
-            if (validation != num_of_jobs){
-                System.err.println("Number of jobs does not match!");
-                return;
             }
 
             while (!pq.isEmpty()) {
@@ -41,12 +24,5 @@ public class Greedy {
                 }
             }
             System.out.println("Makespan: " + p.getTotalProcessingTime());
-
-
-        }catch (FileNotFoundException e){
-            System.err.println("File not found!");
-        }catch (IOException e) {
-            System.err.println("Error reading file!");
-        }
     }
 }
