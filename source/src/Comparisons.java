@@ -37,6 +37,28 @@ public class Comparisons {
 
     }
 
+    public static PQmax<Processor> getProcessors(String fn) {
+        String filename = fn;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            Processor p = null;
+            int num_of_proc = Integer.parseInt(reader.readLine());
+            PQmax<Processor> pq = new PQmax<Processor>(Comparator.naturalOrder());
+
+            for (int i = 0; i < num_of_proc; i++) {
+                p = new Processor();
+                pq.insert(p);
+            }
+
+            return pq;
+        }catch (FileNotFoundException e){
+            System.err.println("File not found!");
+        }catch (IOException e) {
+            System.err.println("Error reading file!");
+        }
+        return null;
+    }
+
 
     public static Job[] getJobs(String fn){
         String filename = fn;
