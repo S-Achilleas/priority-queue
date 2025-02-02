@@ -23,8 +23,6 @@ public class Comparisons {
                         writer.write(id + " " + processingTime + "\n");
                     }
 
-                    System.out.println(fileName);
-
                 } catch (IOException e) {
                     System.err.println(fileName + ": " + e.getMessage());
                 }
@@ -33,14 +31,19 @@ public class Comparisons {
     }
 
 
-    public static void Greedy(String fn){
-        String filename = args[0];
+    public static int Greedy(String fn,boolean descending){
+        String filename = fn;
         PQmax<Processor> pq = Comparisons.getProcessors(filename);
         Processor p = null;
 
         Job[] joblist = Comparisons.getJobs(filename);
         int num_of_jobs = joblist.length;
-        //Sort.quicksort(joblist, 0, joblist.length - 1);
+
+
+        if (descending){
+            Sort.quicksort(joblist, 0, joblist.length - 1);
+        }
+
 
         for (int i = 0; i < num_of_jobs; i++){
             p = pq.getmax();
@@ -50,11 +53,12 @@ public class Comparisons {
 
         while (!pq.isEmpty()) {
             p = pq.getmax();
-            if (pq.size() <= 50){
-                System.out.println("Processor " + p.getId() + " with total processing time: " + p.getTotalProcessingTime() + " and jobs: " + p.getProcessedJobs().print());
-            }
+            //if (pq.size() <= 50){
+               // System.out.println("Processor " + p.getId() + " with total processing time: " + p.getTotalProcessingTime() + " and jobs: " + p.getProcessedJobs().print());
+           //}
         }
-        System.out.println("Makespan: " + p.getTotalProcessingTime());
+        //System.out.println("Makespan: " + p.getTotalProcessingTime());
+        return p.getTotalProcessingTime();
     }
 
     public static PQmax<Processor> getProcessors(String fn) {
@@ -71,6 +75,7 @@ public class Comparisons {
             }
 
             return pq;
+
         }catch (FileNotFoundException e){
             System.err.println("File not found!");
         }catch (IOException e) {
@@ -116,6 +121,41 @@ public class Comparisons {
             System.err.println("Error reading file!");
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        generateFiles();
+        int[] jobsCounter = {100, 250, 500};
+        int numFilesPerJob = 10;
+
+        double[] avgGreedy = new double[jobsCounter.length];
+        double[] avgGreedyDesc = new double[jobsCounter.length];
+
+        for (int i = 0; i < jobsCounter.length; i++) {
+            int N = jobsCounter[i];
+            int totalGreedy = 0;
+            int totalGreedyDesc = 0;
+
+            for (int fileNum = 1; fileNum <= numFilesPerJob; fileNum++) {
+                String fileName = "test" + N + "_" + fileNum + ".txt";
+
+                int makespan1 = Greedy(fileName, false);
+                totalGreedy += makespan1;
+
+                int makespan2 = Greedy(fileName, true);
+                totalGreedyDesc += makespan2;
+            }
+
+            avgGreedy[i] = (double) totalGreedy / numFilesPerJob;
+            avgGreedyDesc[i] = (double) totalGreedyDesc / numFilesPerJob;
+        }
+
+        System.out.println("=== Results ===");
+        for (int i = 0; i < jobsCounter.length; i++) {
+            System.out.printf("N = %d:\n", jobsCounter[i]);
+            System.out.printf("  Greedy Avg Makespan: %.2f\n", avgGreedy[i]);
+            System.out.printf("  Greedy-Decreasing Avg Makespan: %.2f\n\n", avgGreedyDesc[i]);
+        }
     }
 
 }
