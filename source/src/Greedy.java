@@ -4,7 +4,7 @@ import java.util.Comparator;
 public class Greedy {
     public static void main(String[] args) {
         String filename = args[0];
-        PQmax<Processor> pq = new PQmax<Processor>(Comparator.naturalOrder());
+        MaxPQ<Processor> pq = new MaxPQ<Processor>(Comparator.naturalOrder());
 
         try{
             BufferedReader reader = new BufferedReader(new FileReader(filename));

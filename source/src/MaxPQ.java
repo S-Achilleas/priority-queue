@@ -1,5 +1,5 @@
 import java.util.Comparator;
-public class PQmax<T> implements PQInterface<T> {
+public class MaxPQ<T> implements PQInterface<T> {
 
     private T[] heap;
     private int size;
@@ -7,7 +7,7 @@ public class PQmax<T> implements PQInterface<T> {
 
     private static final int DEFAULT_CAPACITY = 4;
 
-    public PQmax(Comparator<T> comparator) {
+    public MaxPQ(Comparator<T> comparator) {
         this.heap = (T[]) new Object[DEFAULT_CAPACITY + 1];
         this.size = 0;
         this.comparator = comparator;

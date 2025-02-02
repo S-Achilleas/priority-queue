@@ -33,7 +33,7 @@ public class Comparisons {
 
     public static int Greedy(String fn,boolean descending){
         String filename = fn;
-        PQmax<Processor> pq = Comparisons.getProcessors(filename);
+        MaxPQ<Processor> pq = Comparisons.getProcessors(filename);
         Processor p = null;
 
         Job[] joblist = Comparisons.getJobs(filename);
@@ -61,13 +61,13 @@ public class Comparisons {
         return p.getTotalProcessingTime();
     }
 
-    public static PQmax<Processor> getProcessors(String fn) {
+    public static MaxPQ<Processor> getProcessors(String fn) {
         String filename = fn;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             Processor p = null;
             int num_of_proc = Integer.parseInt(reader.readLine());
-            PQmax<Processor> pq = new PQmax<Processor>(Comparator.naturalOrder());
+            MaxPQ<Processor> pq = new MaxPQ<Processor>(Comparator.naturalOrder());
 
             for (int i = 0; i < num_of_proc; i++) {
                 p = new Processor();
@@ -124,7 +124,7 @@ public class Comparisons {
     }
 
     public static void main(String[] args) {
-        generateFiles();
+        //generateFiles(); //generates .txt files for input
         int[] jobsCounter = {100, 250, 500};
         int numFilesPerJob = 10;
 
@@ -137,7 +137,7 @@ public class Comparisons {
             int totalGreedyDesc = 0;
 
             for (int fileNum = 1; fileNum <= numFilesPerJob; fileNum++) {
-                String fileName = "test" + N + "_" + fileNum + ".txt";
+                String fileName = "Data/test" + N + "_" + fileNum + ".txt";
 
                 int makespan1 = Greedy(fileName, false);
                 totalGreedy += makespan1;
