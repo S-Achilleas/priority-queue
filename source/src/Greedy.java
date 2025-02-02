@@ -37,7 +37,7 @@ public class Greedy {
             while (!pq.isEmpty()) {
                 p = pq.getmax();
                 if (pq.size() <= 50){
-                    System.out.println("Processor " + p.getId() + " with total processing time: " + p.getTotalProcessingTime());
+                    System.out.println("Processor " + p.getId() + " with total processing time: " + p.getTotalProcessingTime() + " and jobs: " + p.getProcessedJobs().print());
                 }
             }
             System.out.println("Makespan: " + p.getTotalProcessingTime());

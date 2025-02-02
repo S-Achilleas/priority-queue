@@ -14,4 +14,8 @@ public class Job {
     public int getId() {
         return id;
     }
+
+    public String toString() {
+        return "Job " + id + " (" + time + ")";
+    }
 }

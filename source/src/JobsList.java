@@ -20,4 +20,10 @@ private Node tail = null;
             tail = newNode;
         }
     }
+    public void print(){
+        Node x;
+        for(x = head; x != null; x = x.next){
+            System.out.println(x.job);
+        }
+    }
 }
