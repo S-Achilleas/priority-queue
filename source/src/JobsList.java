@@ -20,10 +20,12 @@ private Node tail = null;
             tail = newNode;
         }
     }
-    public void print(){
-        Node x;
+    public String print(){
+        String result = "";
+        Node<T> x;
         for(x = head; x != null; x = x.next){
-            System.out.println(x.job);
+            result += x.job.toString() + "\n";
         }
+        return result;
     }
 }
